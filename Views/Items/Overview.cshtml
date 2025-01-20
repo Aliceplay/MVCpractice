@@ -1,0 +1,10 @@
+﻿@model MVCpractice.Models.Item
+@{
+	var Items = new List<string> { "Item1", "Item2", "Item3" };
+}
+<p> 這是物品的名稱 @Model.Name </p>
+<ul>
+	@foreach(var item in Items){
+	<li>@item</li>
+	}
+</ul>
