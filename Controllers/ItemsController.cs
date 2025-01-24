@@ -25,12 +25,26 @@ namespace MVCpractice.Controllers
             var item = await _context.items.ToListAsync();
             return View(item);
         }
-        //修改跟刪除
+        //新增
         public IActionResult Create()
         {
             return View();
         }
-
+        [HttpPost]
+        public async Task<IActionResult> Create([Bind("Id, Name, Price")]Item item) 
+        {
+            if (ModelState.IsValid) 
+            {
+                _context.items.Add(item);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return View(item);
+            }
+        }
+        //修改跟刪除
         public IActionResult Edit(int id)
         {
             
