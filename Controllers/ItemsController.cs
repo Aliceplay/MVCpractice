@@ -30,6 +30,7 @@ namespace MVCpractice.Controllers
         {
             return View();
         }
+
         [HttpPost]
         public async Task<IActionResult> Create([Bind("Id, Name, Price")]Item item) 
         {
@@ -45,14 +46,40 @@ namespace MVCpractice.Controllers
             }
         }
         //修改跟刪除
-        public IActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
-            
-            return Content("id=" + id);
+            var item = await _context.items.FirstOrDefaultAsync(x => x.Id == id);
+            return View(item);
         }
-        public IActionResult Delete(int id) 
+        [HttpPost]
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name, Price")] Item item)
         {
-            return Content("");
+            if (ModelState.IsValid)
+            {
+                _context.Update(item);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return View(item);
+            }
+        }
+        public async Task<IActionResult> Delete(int id)
+        {
+            var item = await _context.items.FirstOrDefaultAsync(x => x.Id == id);
+            return View(item);
+        }
+        [HttpPost, ActionName("Delete")]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var item = await _context.items.FindAsync(id);
+            if (item!=null)
+            {
+                _context.items.Remove(item);
+                await _context.SaveChangesAsync();
+            }
+            return RedirectToAction("Index");
         }
 
     }

@@ -15,12 +15,10 @@
 			<tr>
 				<td>@item.Name</td>
 				<td>$ @item.Price.ToString("N2")</td>
-				@* <td> *@
-				@* 	<a asp-action="Edit" asp-route-id="@item.Id">Edit</a> *@
-				@* </td> *@
-				@* <td> *@
-				@* 	<a asp-action="Delete" asp-route-id="@item.Id">Delete</a> *@
-				@* </td> *@
+				<td>
+					<a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+					<a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+				</td>
 			</tr>
 		}
 	</tbody>
